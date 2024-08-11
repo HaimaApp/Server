@@ -3,13 +3,13 @@ from sendgrid.helpers.mail import Mail
 import os
 
 sg = SendGridAPIClient(api_key=os.environ.get('SENDGRID_KEY'))
-fr = ""
+fr = "info@haima.uk"
 def VerifyEmailMessage(to):
     message = Mail(
     from_email=fr,  # Sender's email address
     to_emails=to,  # Recipient's email address
     subject="Email Verification Successful!",
-    html_content=f"<p>Dear User, Welcome to Rydah E-commerce</p><p>Email verified successfully.</p><p> </p><p>Best regards</p>") # Email content (HTML supported)
+    html_content=f"<p>Dear User, Welcome to Haima E-commerce</p><p>Email verified successfully.</p><p> </p><p>Best regards</p>") # Email content (HTML supported)
 
     try:
         # Send the email
@@ -25,7 +25,7 @@ def RegisterEmailMessage(to, otp):
     from_email=fr,  # Sender's email address
     to_emails=to,  # Recipient's email address
     subject="Email Verification Code",
-    html_content=f"<p>Dear User, Welcome to Rydah E-commerce</p><p>Kindly use the code below to verify your account.</p><p><h2>{otp}</h2> </p><p>Best regards</p>") # Email content (HTML supported)
+    html_content=f"<p>Dear User, Welcome to Haima E-commerce</p><p>Kindly use the code below to verify your account.</p><p><h2>{otp}</h2> </p><p>Best regards</p>") # Email content (HTML supported)
 
     try:
         # Send the email
@@ -41,7 +41,7 @@ def ResendOTPEmailMessage(to, otp):
     from_email=fr,  # Sender's email address
     to_emails=to,  # Recipient's email address
     subject="Email Verification Code Resent!",
-    html_content=f"<p>Dear User, Welcome to Rydah E-commerce</p><p>Kindly use the code below to verify your account.</p><p><h2>{otp}</h2> </p><p>Best regards</p>") # Email content (HTML supported)
+    html_content=f"<p>Dear User, Welcome to Haima E-commerce</p><p>Kindly use the code below to verify your account.</p><p><h2>{otp}</h2> </p><p>Best regards</p>") # Email content (HTML supported)
 
     try:
         # Send the email
@@ -57,7 +57,7 @@ def ResetPasswordEmailMessage(to, otp):
     from_email=fr,  # Sender's email address
     to_emails=to,  # Recipient's email address
     subject="Email Reset Password Code!",
-    html_content=f"<p>Dear User, Welcome to Rydah E-commerce</p><p>Kindly use the code below to reset your account password.</p><p><h2>{otp}</h2> </p><p>Best regards</p>") # Email content (HTML supported)
+    html_content=f"<p>Dear User, Welcome to Haima E-commerce</p><p>Kindly use the code below to reset your account password.</p><p><h2>{otp}</h2> </p><p>Best regards</p>") # Email content (HTML supported)
 
     try:
         # Send the email

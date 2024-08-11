@@ -147,3 +147,25 @@ class MessageDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         user = self.request.user
         return Message.objects.filter(sender=user) | Message.objects.filter(receiver=user)
+    
+
+class UserAccountDetailsAPIView(ListCreateAPIView):
+    serializer_class = UserAccountDetailsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        details = UsersAccountDetails.objects.filter(user = self.request.user)
+        return details
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class UserAccountDetailsUpdateView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UsersAccountDetails.objects.all()
+    serializer_class = UserAccountDetailsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return UsersAccountDetails.objects.filter(user=user)
+    

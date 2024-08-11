@@ -14,6 +14,9 @@ urlpatterns = [
     path('buyer/address/<int:user_id>/',  BuyerDeliveryAddressAPIView.as_view()),
     path('messages/', MessageListCreateView.as_view(), name='message-list-create'),
     path('messages/<int:pk>/', MessageDetailView.as_view(), name='message-detail'),
+    
+    path('user_bank_details/', UserAccountDetailsAPIView.as_view()),
+    path('update_bank_details/<int:pk>/', UserAccountDetailsUpdateView.as_view()),
     # path("buyer/address/<int:pk>/", BuyDeliveryAddressAPIView.as_view()),
 
 

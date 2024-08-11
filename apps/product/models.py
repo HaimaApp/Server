@@ -96,3 +96,18 @@ class Message(models.Model):
 
     def __str__(self):
         return f'Message from {self.sender} to {self.receiver} at {self.timestamp}'
+    
+
+class UsersAccountDetails(models.Model):
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  bank_name = models.CharField(max_length=500)
+  account_no = models.CharField(max_length=15)
+  account_name = models.CharField(max_length=500)
+  timestamp = models.DateTimeField(auto_now_add=True)
+
+  class Meta:
+      verbose_name = ("UsersAccountDetails")
+      verbose_name_plural = ("UsersAccountDetailss")
+
+  def __str__(self):
+      return f"{self.user} - {self.bank_name} - {self.account_name} - {self.account_no}"

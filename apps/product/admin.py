@@ -8,5 +8,6 @@ admin.site.register(ProductImage)
 admin.site.register(UserFavouriteProducts)
 admin.site.register(CustomerProductReview)
 admin.site.register(DeliveryAddress)
+admin.site.register(UsersAccountDetails)
 
 
