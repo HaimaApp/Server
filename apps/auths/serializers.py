@@ -20,17 +20,19 @@ class RegisterSerializer(serializers.ModelSerializer):
       age = relativedelta(datetime.now(), date_of_birth).years
 
       if age < 18:
-          raise serializers.ValidationError('Must be at least 18 years old to register.')
+           raise serializers.ValidationError('Must be at least 18 years old to register.')
       else:
-          return date_of_birth
+           return date_of_birth
       
   def create(self, validated_data):
     user = User.objects.create(email = validated_data['email'])
     user.password = make_password(validated_data['password'])
     user.save()
     user_otp = generateKey()
+ 
     user = User.objects.get(email=validated_data['email'])
     user.otp = user_otp['OTP']
+
     user.activation_key = user_otp['totp']
     user.save()
     RegisterEmailMessage(user.email, user_otp['OTP'])
@@ -59,7 +61,6 @@ class LoginSerializer(serializers.ModelSerializer):
 
     def get_tokens(self, obj):
         user = User.objects.get(email=obj['email'])
-
         return {
             'refresh': user.tokens()['refresh'],
             'access': user.tokens()['access']
@@ -74,6 +75,7 @@ class LoginSerializer(serializers.ModelSerializer):
         password = attrs.get('password', '')
         filtered_user_by_email = User.objects.filter(email=email)
         user = auth.authenticate(email=email, password=password)
+        
 
         if filtered_user_by_email.exists() and filtered_user_by_email[0].auth_provider != 'email':
             raise AuthenticationFailed(detail='Please continue your login using ' + filtered_user_by_email[0].auth_provider)
@@ -95,7 +97,7 @@ class LoginSerializer(serializers.ModelSerializer):
             'full_name': fullname,
             'tokens': user.tokens
         }
-
+            
         return super().validate(attrs)
     
 class EmailOTPVerificationSerializer(serializers.ModelSerializer):
@@ -103,6 +105,14 @@ class EmailOTPVerificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['otp']
+    
+    def validate(self, attrs):
+        
+        otp = attrs.get('otp', '')
+        
+        # Your validation logic here
+        
+        return attrs
 
 class EmailResendOTPVerificationSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
@@ -110,6 +120,11 @@ class EmailResendOTPVerificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email']
+    
+    def validate(self, attrs):
+        email = attrs.get('email', '')
+        
+        return attrs
 
 class ResetPasswordEmailRequestSerializer(serializers.Serializer):
     email = serializers.EmailField(min_length=2)
@@ -121,6 +136,7 @@ class ResetPasswordEmailRequestSerializer(serializers.Serializer):
             email = attrs.get('email')
             if User.objects.filter(email=email).exists():
                 user = User.objects.get(email=email)
+
                 user_otp = generateKey()
                 user.otp = user_otp['OTP']
                 user.activation_key = user_otp['totp']
