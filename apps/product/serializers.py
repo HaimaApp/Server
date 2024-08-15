@@ -50,3 +50,8 @@ class CreateMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ['receiver', 'content']
+
+class UserAccountDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UsersAccountDetails
+        exclude = ['user', 'timestamp']
